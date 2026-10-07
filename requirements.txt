@@ -14,5 +14,6 @@ typing_extensions
 Werkzeug
 bcrypt<4.0
 Flask-JWT-Extended
+Flask-Cors
 passlib[bcrypt]==1.7.4
 python-dotenv
