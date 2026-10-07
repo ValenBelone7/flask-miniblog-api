@@ -1,3 +1,6 @@
+import os
+
+from dotenv import load_dotenv
 from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
@@ -11,10 +14,12 @@ from views import (
     StatsAPI, UserRoleUpdateAPI, UserDeactivateAPI
 )
 
+load_dotenv()
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://flaskuser:tu_password@localhost/miniblog'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DATABASE_URL"]
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['JWT_SECRET_KEY'] = "clave-secreta"
+app.config['JWT_SECRET_KEY'] = os.environ["JWT_SECRET_KEY"]
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=24)
 
 jwt = JWTManager(app)
@@ -49,5 +54,5 @@ app.add_url_rule("/api/stats", view_func=StatsAPI.as_view("stats_api"), methods=
 CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=os.environ.get("FLASK_DEBUG") == "1")
 

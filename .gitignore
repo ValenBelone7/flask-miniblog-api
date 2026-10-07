@@ -51,3 +51,15 @@ node_modules/
 
 # MySQL dump (if created)
 *.sql
+
+# Entorno virtual con nombre propio (se llegó a versionar en el primer commit)
+.environment/
+.venv/
+
+# Variantes de .env (el .env.example sí se versiona)
+.env.*
+!.env.example
+
+# SQLite
+db.sqlite3
+*.sqlite3
